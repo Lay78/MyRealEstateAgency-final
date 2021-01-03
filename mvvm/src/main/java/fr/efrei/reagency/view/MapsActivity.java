@@ -30,6 +30,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String curAddr;
     private String[] arrLatLong;
     private String[] arrAddr;
+    private String[] arrSold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (extras != null) {
             curProperty = extras.getString("curProperty");
             String sProperties = extras.getString("listProperty");
+            String sSold = extras.getString("listSoldProperty");
             String[] val = curProperty.split("@");
             curLatLong = val[0];
             curAddr = val[1];
             String[] val1 = sProperties.split("#");
+            arrSold = sSold.split("#");
             arrLatLong = new String[val1.length];
             arrAddr = new String[val1.length];
             for (int i = 0; i < val1.length; i++) {
@@ -84,16 +87,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             latlng = new LatLng(Double.valueOf(ll[0]).doubleValue(), Double.valueOf(ll[1]).doubleValue());
             //mMap.addMarker(new MarkerOptions().position(latlng).title(arrAddr[i]));
             if (arrAddr[i].equals(curAddr)) {
-                mMap.addMarker(new MarkerOptions()
+                Marker location = mMap.addMarker(new MarkerOptions()
                         .position(latlng)
                         .title(arrAddr[i])
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                location.showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
             }
-            else
-                mMap.addMarker(new MarkerOptions()
-                        .position(latlng)
-                        .title(arrAddr[i]));
+            else {
+                if (arrSold[i].equals("Sold"))
+                    mMap.addMarker(new MarkerOptions()
+                            .position(latlng)
+                            .title(arrAddr[i]));
+                else
+                    mMap.addMarker(new MarkerOptions()
+                            .position(latlng)
+                            .title(arrAddr[i])
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            }
 
         }
 //        LatLng efrei = new LatLng(48.78879559928572, 2.363705095900726);

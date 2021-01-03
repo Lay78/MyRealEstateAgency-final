@@ -130,10 +130,15 @@ final public class PropertiesActivity
                 Intent intent = new Intent(PropertiesActivity.this, MapsActivity.class);
                 //ArrayList<String> sList = new ArrayList<String>();
                 String sList = "";
+                String sListSold = "";
                 for (int i = 0; i < memProperties.size(); i++) {
                     String s = memProperties.get(i).propertyLatitude + "," + memProperties.get(i).propertyLongitude + "@" + memProperties.get(i).propertyAddress;
                     sList += s;
-                    if (i != memProperties.size()-1) sList += "#";
+                    sListSold += memProperties.get(i).propertyStatus;
+                    if (i != memProperties.size()-1) {
+                        sList += "#";
+                        sListSold += "#";
+                    }
                 }
                 String curPos;
                 if (viewPropertySelected)
@@ -142,6 +147,7 @@ final public class PropertiesActivity
                     curPos = memProperties.get(0).propertyLatitude + "," + memProperties.get(0).propertyLongitude + "@" + memProperties.get(0).propertyAddress;
                 intent.putExtra("curProperty", curPos);
                 intent.putExtra("listProperty", sList);
+                intent.putExtra("listSoldProperty", sListSold);
                 startActivity(intent);
             }
         });
