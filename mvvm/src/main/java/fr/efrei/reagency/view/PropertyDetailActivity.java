@@ -45,9 +45,6 @@ public class PropertyDetailActivity
     //The tag used into this screen for the logs
     public static final String TAG = PropertyDetailActivity.class.getSimpleName();
 
-    private DatePickerDialog.OnDateSetListener mDateCreationSetListener;
-    private DatePickerDialog.OnDateSetListener mDateUpdateSetListener;
-
     private boolean isFirstType = true;
     private boolean isFirstStatus = true;
 
@@ -107,7 +104,7 @@ public class PropertyDetailActivity
                     String euro = euroString.substring(0, euroString.length() - 2);
                     double euroValue = Double.valueOf(euro);
 
-                    Toast.makeText(PropertyDetailActivity.this, "Please Wait..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PropertyDetailActivity.this, "Conversion done.", Toast.LENGTH_SHORT).show();
                     try {
                         convertCurrency(toCurr, euroValue);
                     } catch (IOException e) {

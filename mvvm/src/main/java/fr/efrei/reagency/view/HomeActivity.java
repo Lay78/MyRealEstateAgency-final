@@ -13,7 +13,6 @@ import fr.efrei.reagency.R;
 public class HomeActivity extends AppCompatActivity {
 
     private Button btnWelcome;
-    private boolean supportActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
