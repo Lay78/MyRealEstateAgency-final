@@ -118,14 +118,8 @@ public class PropertyDetailActivity
                         }
                     }
                     else {
-                        String toCurr = "EUR";
-                        String dollarString = propPrice.getText().toString();
-                        String dollar = dollarString.substring(0, dollarString.length() - 2);
-                        double dollarValue = Double.valueOf(dollar);
                         Toast.makeText(PropertyDetailActivity.this, "Conversion done.", Toast.LENGTH_SHORT).show();
                         propPrice.setText(euro + " €");
-
-
                     }
                     //change Euro to Dollar or conversely
                     isEuro = !isEuro;
