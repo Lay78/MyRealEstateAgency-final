@@ -45,8 +45,7 @@ public class PropertyDetailActivity
     //The tag used into this screen for the logs
     public static final String TAG = PropertyDetailActivity.class.getSimpleName();
 
-    private boolean isFirstType = true;
-    private boolean isFirstStatus = true;
+    private boolean isEuro = true;
 
     private ImageView propImage;
     private TextView propType;
@@ -65,6 +64,10 @@ public class PropertyDetailActivity
     //private Button propSave;
     private Button btnConvertPrice;
     private Button btnLoanSimulate;
+
+    private String euroString;
+    private String euro;
+
 
 //    private PropertyDetailActivityViewModel viewModel;
 
@@ -93,24 +96,43 @@ public class PropertyDetailActivity
         propAgentName = findViewById(R.id.propAgentName);
 //        viewModel = new ViewModelProvider(this, new SavedStateViewModelFactory(getApplication(), this, getIntent().getExtras())).get(PropertyDetailActivityViewModel.class);
 
+
         btnConvertPrice = findViewById(R.id.btnConvertPrice);
         btnConvertPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!propPrice.getText().toString().isEmpty()) {
-                    //String toCurr = toCurrency.getSelectedItem().toString();
-                    String toCurr = "USD";
-                    String euroString = propPrice.getText().toString();
-                    String euro = euroString.substring(0, euroString.length() - 2);
-                    double euroValue = Double.valueOf(euro);
 
-                    Toast.makeText(PropertyDetailActivity.this, "Conversion done.", Toast.LENGTH_SHORT).show();
-                    try {
-                        convertCurrency(toCurr, euroValue);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(PropertyDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (isEuro == true) {
+                        euroString = propPrice.getText().toString();
+                        euro = euroString.substring(0, euroString.length() - 2);
+                        String toCurr = "USD";
+
+                        double euroValue = Double.valueOf(euro);
+                        Toast.makeText(PropertyDetailActivity.this, "Conversion done.", Toast.LENGTH_SHORT).show();
+                        try {
+                            convertCurrency(toCurr, euroValue);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(PropertyDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
+                    else {
+                        String toCurr = "EUR";
+                        String dollarString = propPrice.getText().toString();
+                        String dollar = dollarString.substring(0, dollarString.length() - 2);
+                        double dollarValue = Double.valueOf(dollar);
+                        Toast.makeText(PropertyDetailActivity.this, "Conversion done.", Toast.LENGTH_SHORT).show();
+                        propPrice.setText(euro + " €");
+
+
+                    }
+                    //change Euro to Dollar or conversely
+                    isEuro = !isEuro;
+                    if (btnConvertPrice.getText().toString() == "€")
+                        btnConvertPrice.setText("$");
+                    else
+                        btnConvertPrice.setText("€");
                 } else {
                     Toast.makeText(PropertyDetailActivity.this, "Please Enter a Value to Convert..", Toast.LENGTH_SHORT).show();
                 }
